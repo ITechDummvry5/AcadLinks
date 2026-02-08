@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scholarship Finder</title>
+  <link rel="stylesheet" href="core/assets/style.css">
+  <meta name="description" content="ANNA NICOLE I HERRERA">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  />
+  <link rel="shortcut icon" href="core/assets/images/favicon.ico" type="image/x-icon">
+</head>
+<body>
+
+  <!-- Loader -->
+<div class="loader-overlay" id="loader">
+  <div class="loader"></div>
+</div>
+
+
+  <div class="page-wrapper">
+
+<!-- Header -->
+<header class="top-bar">
+  <div class="brand">
+    <img src="core/assets/images/favicon.ico" alt="Logo">
+    <h1 id="header-title">ACADLINK</h1>
+  </div>
+
+  <div class="header-right">
+    <nav class="header-nav">
+<a href="tools.html" class="header-btn">
+  <i class="fas fa-tools"></i> Tools
+</a>
+    </nav>
+    <p class="header-desc">- Your gateway to scholarships and opportunities</p>
+    
+  </div>
+</header>
+
+
+
+    <!-- Main content -->
+    <div class="container">
+
+      <!-- Filters -->
+      <aside class="filters">
+        <h3>Filter Scholarships</h3>
+        <input type="text" id="search" placeholder="Keyword (STEM, IT, Org)">
+        <input type="text" id="location" placeholder="Location (Philippines)">
+        <select id="course">
+          <option value="">All Strands</option>
+          <option value="STEM">STEM</option>
+          <option value="ABM">ABM</option>
+          <option value="HUMSS">HUMSS</option>
+          <option value="GAS">GAS</option>
+          <option value="TVL">TVL</option>
+        </select>
+        <button onclick="searchScholarships()" id="searchBtn">Search</button>
+      <button onclick="resetSearch()" id="resetBtn">Reset</button>
+      </aside>
+
+
+      <script>
+  const searchBtn = document.getElementById('searchBtn');
+  searchBtn.addEventListener('click', () => {
+    document.body.classList.add('blur-bg');
+  });
+</script>
+
+      <!-- Results -->
+      <main class="results" id="results">
+        <!-- Scholarship cards appear here -->
+      </main>
+
+
+
+    </div>
+
+
+
+
+
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-container">
+
+<!-- Left: Logo & Copyright -->
+<div class="footer-left">
+  <img src="core/assets/images/favicon.ico" alt="Logo" class="footer-logo">
+  <div class="footer-left-text">
+    <p>Scholarship Finders</p>
+    <span>ACADLINK © 2026</span>
+  </div>
+</div>
+
+
+    <!-- Center: Quick Links -->
+    <div class="footer-center">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Tools</a></li>
+      </ul>
+    </div>
+
+    <!-- Right: Contact & Subscribe -->
+    <div class="footer-right">
+      <p><span>Connecting </span>  students to scholarships and opportunities</p>
+      <p><span> Email: </span>  info@acadlink.com | Phone: +63 912 345 6789</p>
+
+      <!-- Email subscription -->
+      <div class="footer-subscribe">
+        <input type="email" placeholder="Your email">
+        <button>Subscribe</button>
+      </div>
+
+      <div class="footer-socials">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+
+  </div>
+
+  <script src="core/assets/script.js"></script>
+</body>
+</html>

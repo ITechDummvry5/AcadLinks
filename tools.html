@@ -8,6 +8,16 @@
 <link rel="stylesheet" href="core/assets/all.min.css">
 
 <style>
+
+  .ai-icon {
+  width: 22px;        /* adjust as needed */
+  height: 22px;
+  object-fit: contain;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
+
 i { margin-right: 6px; }
 
 /* -------------------- GLOBAL -------------------- */
@@ -26,8 +36,9 @@ body {
 
 /* -------------------- HEADER -------------------- */
 .header { text-align:center; margin-bottom:40px; }
-.header h1 { font-size:2.8em; margin-bottom:5px; color:#FFD700; font-weight:700; }
+.header h1  a{ font-size:2.3em; margin-bottom:5px; color:#FFD700; font-weight:700; }
 .header p { color:#bbb; font-size:1.1em; }
+a{text-decoration: none;}
 
 /* -------------------- API CONFIG -------------------- */
 .api-section {
@@ -62,9 +73,15 @@ body {
 .search-controls { display:flex; gap:10px; flex-wrap:wrap; }
 #searchInput { flex:1; padding:12px; border:2px solid #555; border-radius:6px; background:transparent; color:#eee; outline:none; }
 #searchInput:focus { border-color:#FFD700; }
-#aiProvider { padding:10px; border:2px solid #555; border-radius:6px; background:transparent; color:#eee; outline:none; min-width:180px; }
+#aiProvider { padding:10px; border:2px solid #555; border-color: #e6c200; border-radius:6px; background:transparent; color:#eee; outline:none; min-width:180px; }
 button { padding:10px 18px; border:none; border-radius:6px; font-size:14px; font-weight:600; cursor:pointer; background:#FFD700; color:#1e1e1e; transition:0.2s; }
 button:hover { background:#e6c200; }
+#llamaLocalBtn {
+  background-color: transparent;
+  border: 2px solid #e6c200;
+  color: #e6c200;
+}
+
 
 /* -------------------- RESULTS -------------------- */
 .results-section { display:none; margin-bottom:20px; }
@@ -92,14 +109,18 @@ button:hover { background:#e6c200; }
 
 <div class="container">
   <div class="header">
-    <h1><i class="fa-solid fa-graduation-cap"></i> ScholarshipFinder</h1>
+    <h1><a href="index.html"><i class="fa-solid fa-graduation-cap"></i> ScholarshipFinder</a></h1>
   </div>
 
   <!-- API CONFIG -->
   <div class="api-section" id="apiSection">
 
     <div class="api-card">
-      <h3><i class="fa-solid fa-brain"></i> DeepSeek</h3>
+<h3>
+  <img src="core/assets/images/DEEPSEEK.png" class="ai-icon">
+  DeepSeek
+</h3>
+
       <div class="api-input-group">
         <label>API KEY</label>
         <input type="password" id="deepseekKey">
@@ -111,7 +132,11 @@ button:hover { background:#e6c200; }
     </div>
 
     <div class="api-card">
-      <h3><i class="fa-solid fa-robot"></i> Ollama</h3>
+<h3>
+  <img src="core/assets/images/LAMA.png" class="ai-icon">
+  Ollama
+</h3>
+
       <div class="api-input-group">
         <label>API KEY</label>
         <input type="password" id="ollamaKey">
@@ -123,7 +148,11 @@ button:hover { background:#e6c200; }
     </div>
 
     <div class="api-card">
-      <h3><i class="fa-solid fa-bolt"></i> Grok</h3>
+<h3>
+  <img src="core/assets/images/GROK.png" class="ai-icon">
+  Grok
+</h3>
+
       <div class="api-input-group">
         <label>API KEY</label>
         <input type="password" id="grokKey">
@@ -135,7 +164,11 @@ button:hover { background:#e6c200; }
     </div>
 
     <div class="api-card">
-      <h3><i class="fa-solid fa-openai"></i> OpenAI</h3>
+<h3>
+  <img src="core/assets/images/OPENAI.png" class="ai-icon">
+  OpenAI
+</h3>
+
       <div class="api-input-group">
         <label>API KEY</label>
         <input type="password" id="openaiKey">
@@ -146,10 +179,12 @@ button:hover { background:#e6c200; }
       </div>
     </div>
 
-    <div class="api-actions">
-      <button id="testApisBtn">Test Connections</button>
-      <button id="saveConfigBtn">Save Keys</button>
-    </div>
+<div class="api-actions">
+  <button id="testApisBtn">Test Connections</button>
+  <button id="saveConfigBtn">Save Keys</button>
+  <button id="llamaLocalBtn">🦙 LLaMA Local</button>
+</div>
+
 
   </div>
 
@@ -162,6 +197,7 @@ button:hover { background:#e6c200; }
         <option value="ollama">Ollama Only</option>
         <option value="grok">Grok Only</option>
         <option value="openai">OpenAI Only</option>
+        <option value="llama-local">🦙 LLaMA Local (Offline)</option>
         <option value="compare">Compare All</option>
       </select>
       <button id="searchBtn">SEARCH</button>
@@ -187,9 +223,11 @@ button:hover { background:#e6c200; }
 </div>
 
 <script>
+/* ===================== CONFIG ===================== */
+
 const API_CONFIG = {
   deepseek: { name: 'DeepSeek', baseURL: 'https://api.deepseek.com/v1', endpoints: { chat: '/chat/completions', models: '/models' } },
-  ollama: { name: 'Ollama', baseURL: 'https://api.x.ai/v1', endpoints: { chat: '/chat/completions', models: '/models' } },
+  ollama: { name: 'Ollama Cloud', baseURL: 'https://api.x.ai/v1', endpoints: { chat: '/chat/completions', models: '/models' } },
   grok: { name: 'Grok', baseURL: 'https://api.x.ai/v1', endpoints: { chat: '/chat/completions', models: '/models' } },
   openai: { name: 'OpenAI', baseURL: 'https://api.openai.com/v1', endpoints: { chat: '/chat/completions', models: '/models' } }
 };
@@ -201,97 +239,228 @@ const modelMap = {
   openai: 'gpt-4.1-mini'
 };
 
+// 🦙 LOCAL OLLAMA (OFFLINE)
+const LOCAL_OLLAMA = {
+  name: 'LLaMA Local',
+  baseURL: 'http://localhost:11434',
+  chatEndpoint: '/api/chat',
+  model: 'llama3'
+};
+
+/* ===================== STATUS UI ===================== */
+
 function updateApiStatus(provider, status, message='') {
   const dot = document.getElementById(provider+'Status');
   const text = document.getElementById(provider+'StatusText');
-  if(status==='connected'){ dot.className='status-dot connected'; text.textContent='Connected ✓'; text.style.color='#FFD700'; }
-  else if(status==='saved'){ dot.className='status-dot'; text.textContent='Configured'; text.style.color='#ffa500'; }
-  else if(status==='error'){ dot.className='status-dot'; text.textContent=message||'Failed'; text.style.color='#ff4444'; }
-  else{ dot.className='status-dot'; text.textContent='Not configured'; text.style.color='#ccc'; }
+  if(!dot || !text) return;
+
+  if(status==='connected'){
+    dot.className='status-dot connected';
+    text.textContent='Connected ✓';
+    text.style.color='#FFD700';
+  } else if(status==='saved'){
+    dot.className='status-dot';
+    text.textContent='Configured';
+    text.style.color='#ffa500';
+  } else if(status==='error'){
+    dot.className='status-dot';
+    text.textContent=message||'Failed';
+    text.style.color='#ff4444';
+  } else {
+    dot.className='status-dot';
+    text.textContent='Not configured';
+    text.style.color='#ccc';
+  }
 }
+
+/* ===================== LOAD KEYS ===================== */
 
 function loadApiKeys(){
   ['deepseek','ollama','grok','openai'].forEach(p=>{
     const key = localStorage.getItem(p+'_api_key');
-    if(key){ document.getElementById(p+'Key').value=key; updateApiStatus(p,'saved'); }
+    if(key){
+      document.getElementById(p+'Key').value = key;
+      updateApiStatus(p,'saved');
+    }
   });
 }
 
+/* ===================== TEST CLOUD APIs ===================== */
+
 async function testApiConnection(provider){
   const key = document.getElementById(provider+'Key').value;
-  if(!key){ updateApiStatus(provider,'error','No key'); return false; }
+  if(!key){
+    updateApiStatus(provider,'error','No key');
+    return false;
+  }
   try{
-    const res = await fetch(API_CONFIG[provider].baseURL+API_CONFIG[provider].endpoints.models,{
-      headers:{'Authorization':`Bearer ${key}`}
-    });
+    const res = await fetch(
+      API_CONFIG[provider].baseURL + API_CONFIG[provider].endpoints.models,
+      { headers:{'Authorization':`Bearer ${key}`} }
+    );
     if(!res.ok) throw new Error();
-    updateApiStatus(provider,'connected'); 
+    updateApiStatus(provider,'connected');
     return true;
-  }catch(e){
-    updateApiStatus(provider,'error','Invalid key'); 
+  }catch{
+    updateApiStatus(provider,'error','Invalid key');
     return false;
   }
 }
 
-async function queryAI(provider, query, apiKey){
-  const res = await fetch(API_CONFIG[provider].baseURL+API_CONFIG[provider].endpoints.chat,{
-    method:'POST',
-    headers:{'Authorization':`Bearer ${apiKey}`,'Content-Type':'application/json'},
-    body:JSON.stringify({
-      model: modelMap[provider],
-      messages:[{role:'user', content:query}],
-      max_tokens:1000,
-      temperature:0.7
-    })
-  });
-  const data = await res.json();
-  return data.choices[0].message.content;
+/* ===================== CLOUD QUERY (with timeout) ===================== */
+
+async function queryAI(provider, query, apiKey, timeout=15000) {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeout);
+
+  try {
+    const res = await fetch(
+      API_CONFIG[provider].baseURL + API_CONFIG[provider].endpoints.chat,
+      {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          model: modelMap[provider],
+          messages: [{ role: 'user', content: query }],
+          max_tokens: 1000,
+          temperature: 0.7
+        }),
+        signal: controller.signal
+      }
+    );
+
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    return data.choices[0].message.content;
+
+  } catch (err) {
+    if (err.name === 'AbortError') throw new Error('Request timed out ⏱️');
+    else throw err;
+  } finally {
+    clearTimeout(id);
+  }
 }
 
+/* ===================== LOCAL LLaMA QUERY (with timeout) ===================== */
+
+async function queryLocalLlama(query, timeout=15000) {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeout);
+
+  try {
+    const res = await fetch(LOCAL_OLLAMA.baseURL + LOCAL_OLLAMA.chatEndpoint, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        model: LOCAL_OLLAMA.model,
+        messages:[{role:'user', content:query}],
+        stream:false
+      }),
+      signal: controller.signal
+    });
+
+    if(!res.ok) throw new Error('Local LLaMA not running');
+    const data = await res.json();
+    return data.message.content;
+
+  } catch (err) {
+    if (err.name === 'AbortError') throw new Error('Request timed out ⏱️');
+    else throw err;
+  } finally {
+    clearTimeout(id);
+  }
+}
+
+/* ===================== SEARCH ===================== */
+
 async function performSearch(){
-  const query=document.getElementById('searchInput').value.trim();
-  const provider=document.getElementById('aiProvider').value;
-  if(!query) return alert('Enter query');
+  const query = document.getElementById('searchInput').value.trim();
+  const provider = document.getElementById('aiProvider').value;
+  if (!query) return alert('Enter query');
 
   document.getElementById('loading').classList.add('active');
   document.getElementById('resultsSection').classList.remove('active');
 
-  let resultsHTML='';
-  const providers = provider==='compare' ? ['deepseek','ollama','grok','openai'] : [provider];
+  let resultsHTML = '';
 
-  for(const p of providers){
-    const key=document.getElementById(p+'Key').value;
-    if(!key){ resultsHTML+=`<div class="error">${API_CONFIG[p].name} not configured</div>`; continue; }
-    const text = await queryAI(p,query,key);
-    resultsHTML+=`<div class="response-card"><div class="provider-badge">${API_CONFIG[p].name}</div><div class="response-content">${text}</div></div>`;
+  try {
+    if(provider === 'llama-local'){
+      const text = await queryLocalLlama(query);
+      resultsHTML = `
+        <div class="response-card">
+          <div class="provider-badge">🦙 LLaMA Local</div>
+          <div class="response-content">${text}</div>
+        </div>`;
+    } else {
+      const providers = provider === 'compare' ? ['deepseek','ollama','grok','openai'] : [provider];
+
+      for(const p of providers){
+        const key = document.getElementById(p+'Key').value;
+        if(!key){
+          resultsHTML += `<div class="error">${API_CONFIG[p].name} not configured</div>`;
+          continue;
+        }
+
+        try {
+          const text = await queryAI(p, query, key);
+          resultsHTML += `
+            <div class="response-card">
+              <div class="provider-badge">${API_CONFIG[p].name}</div>
+              <div class="response-content">${text}</div>
+            </div>`;
+        } catch(err) {
+          resultsHTML += `<div class="error">${API_CONFIG[p].name}: ${err.message}</div>`;
+        }
+      }
+    }
+  } catch(err){
+    resultsHTML = `<div class="error">🦙 ${err.message}</div>`;
   }
 
-  document.getElementById('resultsArea').innerHTML=resultsHTML;
+  document.getElementById('resultsArea').innerHTML = resultsHTML;
   document.getElementById('loading').classList.remove('active');
   document.getElementById('resultsSection').classList.add('active');
 }
 
-document.getElementById('testApisBtn').onclick=async()=>{
-  const results = await Promise.all(['deepseek','ollama','grok','openai'].map(testApiConnection));
+/* ===================== BUTTONS ===================== */
+
+document.getElementById('testApisBtn').onclick = async () => {
+  const results = await Promise.all(
+    ['deepseek','ollama','grok','openai'].map(testApiConnection)
+  );
   const ok = results.filter(Boolean).length;
-  if(ok>0){
+  if(ok > 0){
     document.getElementById('searchSection').classList.add('active');
     document.getElementById('globalStatus').classList.add('connected');
     document.getElementById('statusText').textContent = `APP: ${ok}/4 APIs connected`;
   }
 };
 
-document.getElementById('saveConfigBtn').onclick=()=>{
+document.getElementById('saveConfigBtn').onclick = () => {
   ['deepseek','ollama','grok','openai'].forEach(p=>{
-    const key=document.getElementById(p+'Key').value;
-    if(key) localStorage.setItem(p+'_api_key',key);
+    const key = document.getElementById(p+'Key').value;
+    if(key) localStorage.setItem(p+'_api_key', key);
   });
   alert('Keys saved');
 };
 
-document.getElementById('searchBtn').onclick=performSearch;
+document.getElementById('llamaLocalBtn').onclick = () => {
+  document.getElementById('searchSection').classList.add('active');
+  document.getElementById('aiProvider').value = 'llama-local';
+  document.getElementById('globalStatus').classList.add('connected');
+  document.getElementById('statusText').textContent = 'APP: Using LLaMA Local (Offline)';
+};
+
+document.getElementById('searchBtn').onclick = performSearch;
+
+/* ===================== INIT ===================== */
+
 loadApiKeys();
 </script>
+
 
 </body>
 </html>

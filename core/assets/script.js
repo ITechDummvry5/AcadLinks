@@ -54,7 +54,9 @@ const scholarships = [
     location: "Laguna",
     course: "STEM",
     link: "https://sei.dost.gov.ph",
-    image: "core/assets/images/DOST.png"
+    image: "core/assets/images/DOST.png",
+    status: "CLOSED",
+    deadline: "December 15, 2025"
   },
   {
     title: "CHED Scholarship",
@@ -62,7 +64,9 @@ const scholarships = [
     location: "Pampanga",
     course: "ALL STRAND",
     link: "https://ched.gov.ph",
-    image: "core/assets/images/CHED.png"
+    image: "core/assets/images/CHED.png",
+    status: "OPEN",
+    deadline: "June 10, 2026"
   },
   {
     title: "Megaworld Foundation Scholarship",
@@ -70,7 +74,9 @@ const scholarships = [
     location: "Metro Manila",
     course: "ABM",
     link: "https://www.megaworldfoundation.com",
-    image: "core/assets/images/MEGA.png"
+    image: "core/assets/images/MEGA.png",
+    status: "CLOSED",
+    deadline: "November 30, 2025"
   },
   {
     title: "OWWA Scholarship",
@@ -78,7 +84,9 @@ const scholarships = [
     location: "Cebu",
     course: "TVL",
     link: "https://owwa.gov.ph",
-    image: "core/assets/images/OWWA.png"
+    image: "core/assets/images/OWWA.png",
+    status: "OPEN",
+    deadline: "May 25, 2026"
   },
   {
     title: "DepEd SHS Voucher Program",
@@ -86,7 +94,9 @@ const scholarships = [
     location: "Cagayan",
     course: "ALL STRAND",
     link: "https://www.deped.gov.ph",
-    image: "core/assets/images/DEPED.png"
+    image: "core/assets/images/DEPED.png",
+    status: "CLOSED",
+    deadline: "October 20, 2025"
   },
   {
     title: "Tertiary Education Subsidy (TES)",
@@ -94,7 +104,9 @@ const scholarships = [
     location: "Iloilo",
     course: "ALL STRAND",
     link: "https://unifast.gov.ph",
-    image: "core/assets/images/UNI.png"
+    image: "core/assets/images/UNI.png",
+    status: "OPEN",
+    deadline: "July 5, 2026"
   },
   {
     title: "DSWD Educational Assistance",
@@ -102,7 +114,9 @@ const scholarships = [
     location: "Albay",
     course: "ALL STRAND",
     link: "https://www.dswd.gov.ph",
-    image: "core/assets/images/DSWD.png"
+    image: "core/assets/images/DSWD.png",
+    status: "CLOSED",
+    deadline: "September 18, 2025"
   },
   {
     title: "AFP Educational Benefit System",
@@ -110,7 +124,9 @@ const scholarships = [
     location: "Davao del Sur",
     course: "ALL STRAND",
     link: "https://www.afp.mil.ph",
-    image: "core/assets/images/AFP.png"
+    image: "core/assets/images/AFP.png",
+    status: "OPEN",
+    deadline: "August 15, 2026"
   },
   {
     title: "PNP Educational Assistance Program",
@@ -118,7 +134,9 @@ const scholarships = [
     location: "Misamis Oriental",
     course: "ALL STRAND",
     link: "https://www.pnp.gov.ph",
-    image: "core/assets/images/PNP.png"
+    image: "core/assets/images/PNP.png",
+    status: "CLOSED",
+    deadline: "September 5, 2025"
   },
   {
     title: "CHED Merit Scholarship",
@@ -126,7 +144,9 @@ const scholarships = [
     location: "Ilocos Norte",
     course: "ALL STRAND",
     link: "https://ched.gov.ph",
-    image: "core/assets/images/CHED.png"
+    image: "core/assets/images/CHED.png",
+    status: "OPEN",
+    deadline: "July 20, 2026"
   },
   {
     title: "DILG Scholarship Program",
@@ -134,7 +154,9 @@ const scholarships = [
     location: "Leyte",
     course: "HUMSS",
     link: "https://www.dilg.gov.ph",
-    image: "core/assets/images/DILG.png"
+    image: "core/assets/images/DILG.png",
+    status: "CLOSED",
+    deadline: "October 12, 2025"
   },
   {
     title: "DOST-SEI JL Science Scholarship",
@@ -142,7 +164,9 @@ const scholarships = [
     location: "Zamboanga del Sur",
     course: "STEM",
     link: "https://sei.dost.gov.ph",
-    image: "core/assets/images/DOST.png"
+    image: "core/assets/images/DOST.png",
+    status: "OPEN",
+    deadline: "June 28, 2026"
   },
   {
     title: "BFAR Scholarship",
@@ -150,7 +174,9 @@ const scholarships = [
     location: "Palawan",
     course: "STEM",
     link: "https://www.bfar.da.gov.ph",
-    image: "core/assets/images/BFAR.png"
+    image: "core/assets/images/BFAR.png",
+    status: "CLOSED",
+    deadline: "November 2, 2025"
   },
   {
     title: "TESDA Scholarship Program",
@@ -158,7 +184,9 @@ const scholarships = [
     location: "South Cotabato",
     course: "TVL",
     link: "https://www.tesda.gov.ph",
-    image: "core/assets/images/TESDA.png"
+    image: "core/assets/images/TESDA.png",
+    status: "OPEN",
+    deadline: "May 30, 2026"
   },
   {
     title: "SM Foundation Scholarship",
@@ -166,7 +194,9 @@ const scholarships = [
     location: "Metro Manila",
     course: "ABM",
     link: "https://www.sm-foundation.org",
-    image: "core/assets/images/SM.png"
+    image: "core/assets/images/SM.png",
+    status: "CLOSED",
+    deadline: "December 1, 2025"
   },
   {
     title: "Philippine National Oil Company (PNOC) Scholarship",
@@ -174,25 +204,32 @@ const scholarships = [
     location: "Quezon",
     course: "STEM",
     link: "https://www.pnoc.com.ph",
-    image: "core/assets/images/PNOC.png"
-},
-{
+    image: "core/assets/images/PNOC.png",
+    status: "OPEN",
+    deadline: "August 2, 2026"
+  },
+  {
     title: "Philippine Red Cross Scholarship",
     description: "Support for students taking Health Science and related courses.",
     location: "Manila",
     course: "STEM",
     link: "https://www.redcross.org.ph",
-    image: "core/assets/images/RED.png"
-},
-{
+    image: "core/assets/images/RED.png",
+    status: "CLOSED",
+    deadline: "October 28, 2025"
+  },
+  {
     title: "San Miguel Foundation Scholarship",
     description: "Scholarship for senior high and college students in Business and ABM strand.",
     location: "Cebu",
     course: "ABM",
     link: "https://www.sanmiguelfoundation.org",
-    image: "core/assets/images/SAN.png"
-}
+    image: "core/assets/images/SAN.png",
+    status: "OPEN",
+    deadline: "June 12, 2026"
+  }
 ];
+
 
 // ====================== SEARCH FUNCTION ======================
 
@@ -256,8 +293,15 @@ function searchScholarships() {
           <div class="badges">
             <span class="badge"><i class="fa-solid fa-location-dot"></i> ${item.location}</span>
             <span class="badge"><i class="fa-solid fa-graduation-cap"></i> ${item.course}</span>
+         
           </div>
-          <a href="${item.link}" target="_blank">Apply</a>
+              <p class="deadline">
+                 <span class="badge status ${item.status === "OPEN" ? "open" : "closed"}">
+        <i class="fa-solid fa-circle"></i> ${item.status}
+      </span>
+      <i class="fa-solid fa-calendar"></i> ${item.deadline}
+    </p>
+          <a href="${item.link}" target="_blank">Open link</a>
         `;
         resultsDiv.appendChild(div);
       });
@@ -274,3 +318,23 @@ function searchScholarships() {
 function resetSearch() {
   location.reload(); // Reload page to start fresh
 }
+
+// ====================== Clock FUNCTION ====================== 
+function updateClock() {
+  const clock = document.getElementById("clock");
+  const now = new Date();
+
+  let hours = now.getHours();
+  let minutes = now.getMinutes();
+  let seconds = now.getSeconds();
+
+  hours = hours < 10 ? "0" + hours : hours;
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+  seconds = seconds < 10 ? "0" + seconds : seconds;
+
+  clock.textContent = `${hours}:${minutes}:${seconds}`;
+}
+
+// Start immediately and update every second
+updateClock();
+setInterval(updateClock, 1000);

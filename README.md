@@ -15,6 +15,8 @@ AcadLinks/
 │            ├── script.js
 │            ├── fonts /
 │            └── images/
+├       └── Webfonts
+│              └── (icon Stored)
 └── README.md
 
 FEATURES (Bullets Word)
@@ -25,6 +27,7 @@ FEATURES (Bullets Word)
 - Loading animation while searching
 - Responsive scholarship cards
 - Direct links to official scholarship websites
+- (Open And Closed) Status & Deadline
 
 UI ENHANCEMENTS
 - Font Awesome icons for better visuals
@@ -78,6 +81,10 @@ The system uses: [ICONS FOR CLARITY, SIMPLE LAYOUT,  RESPONSIVE DESIGN]
 This ensures the website is easy to use even for first-time users.
 8. Tools & AI Integration Setup
 The system’s Tools section launches the ACADLINKS Intelligence utility, which currently allows users to search, compare, and get recommendations for scholarships based on keywords, strand, and location. It also serves as a foundation for future AI-powered features, making scholarship selection faster and more personalized.
+9. Open/Closed Status and Deadline Date
+The system clearly shows whether each scholarship is OPEN or CLOSED and displays the application deadline.
+This helps students quickly identify which scholarships are still available and plan their applications accordingly, avoiding expired or unavailable opportunities.
+
 
 About? TOOLS PAGE – ACADLINKS INTELLIGENCE
 The Tools section provides access to additional utilities that extend the system beyond scholarship searching.
@@ -85,6 +92,7 @@ When the Tools button is clicked, it launches an ACADLINKS Intelligence tool, wh
 - DeepSeek
 - OpenAI
 - Ollama / xAI
+- Grok
 PURPOSE OF THE TOOL
 This tool demonstrates how ACADLINK can be expanded to include AI-powered features, such as intelligent search, recommendations, or future chatbot assistance. It serves as a foundation for integrating real AI APIs into the system.
 

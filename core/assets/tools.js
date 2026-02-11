@@ -18,7 +18,7 @@ const MODEL_MAP = {
 
 const LOCAL_OLLAMA = {
   baseURL: 'http://localhost:11434/api/chat',
-  model: 'llama3'
+  model: 'llama3:latest'
 };
 
 /* ===================== DOM CACHE ===================== */
@@ -31,24 +31,34 @@ const DOM = {
   resultsArea: document.getElementById('resultsArea'),
   loading: document.getElementById('loading'),
   resultsSection: document.getElementById('resultsSection'),
-  searchSection: document.getElementById('searchSection')
+  searchSection: document.getElementById('searchSection'),
+  keyInputs: {}
 };
+
+PROVIDERS.forEach(p => {
+  DOM.keyInputs[p] = document.getElementById(p + 'Key');
+});
 
 /* ===================== HELPERS ===================== */
 
 const hasInternet = () => navigator.onLine;
 
 const escapeHTML = str =>
-  str.replace(/[&<>"']/g, m => ({
+  String(str || '').replace(/[&<>"']/g, m => ({
     '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'
   }[m]));
 
-async function fetchWithTimeout(url, options = {}, timeout = 15000) {
+/* fetch with timeout + optional abort signal */
+async function fetchWithTimeout(url, options = {}, timeout = 15000, signal) {
   const controller = new AbortController();
   const id = setTimeout(() => controller.abort(), timeout);
 
   try {
-    const res = await fetch(url, { ...options, signal: controller.signal });
+    const res = await fetch(url, {
+      ...options,
+      signal: signal || controller.signal
+    });
+
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     return res.json();
   } finally {
@@ -58,28 +68,29 @@ async function fetchWithTimeout(url, options = {}, timeout = 15000) {
 
 /* ===================== STATUS UI ===================== */
 
+const STATUS_MAP = {
+  connected: ['status-dot connected', 'Connected ✓', '#FFD700'],
+  saved: ['status-dot', 'Configured', '#ffa500'],
+  error: ['status-dot', 'Failed', '#ff4444'],
+  default: ['status-dot', 'Not configured', '#ccc']
+};
+
 function updateApiStatus(provider, status, message = '') {
   const dot = document.getElementById(provider + 'Status');
   const text = document.getElementById(provider + 'StatusText');
   if (!dot || !text) return;
 
-  const map = {
-    connected: ['status-dot connected', 'Connected ✓', '#FFD700'],
-    saved: ['status-dot', 'Configured', '#ffa500'],
-    error: ['status-dot', message || 'Failed', '#ff4444'],
-    default: ['status-dot', 'Not configured', '#ccc']
-  };
-
-  const [cls, label, color] = map[status] || map.default;
+  const [cls, label, color] = STATUS_MAP[status] || STATUS_MAP.default;
   dot.className = cls;
-  text.textContent = label;
+  text.textContent = message || label;
   text.style.color = color;
 }
 
 /* ===================== API CHECK ===================== */
 
 async function testApiConnection(provider) {
-  const key = document.getElementById(provider + 'Key').value.trim();
+  const key = DOM.keyInputs[provider].value.trim();
+  const cfg = API_CONFIG[provider];
 
   if (!key) {
     updateApiStatus(provider, 'error', 'No key');
@@ -92,10 +103,9 @@ async function testApiConnection(provider) {
   }
 
   try {
-    await fetchWithTimeout(
-      API_CONFIG[provider].baseURL + API_CONFIG[provider].models,
-      { headers: { Authorization: `Bearer ${key}` } }
-    );
+    await fetchWithTimeout(cfg.baseURL + cfg.models, {
+      headers: { Authorization: `Bearer ${key}` }
+    });
     updateApiStatus(provider, 'connected');
     return true;
   } catch {
@@ -106,9 +116,11 @@ async function testApiConnection(provider) {
 
 /* ===================== QUERY ===================== */
 
-async function queryCloud(provider, query, key) {
+async function queryCloud(provider, query, key, signal) {
+  const cfg = API_CONFIG[provider];
+
   const data = await fetchWithTimeout(
-    API_CONFIG[provider].baseURL + API_CONFIG[provider].chat,
+    cfg.baseURL + cfg.chat,
     {
       method: 'POST',
       headers: {
@@ -121,29 +133,51 @@ async function queryCloud(provider, query, key) {
         max_tokens: 1000,
         temperature: 0.7
       })
-    }
+    },
+    15000,
+    signal
   );
-  return data.choices[0].message.content;
+
+  return data.choices?.[0]?.message?.content || 'No response';
 }
 
-async function queryLocal(query) {
-  const data = await fetchWithTimeout(LOCAL_OLLAMA.baseURL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: LOCAL_OLLAMA.model,
-      messages: [{ role: 'user', content: query }],
-      stream: false
-    })
-  });
-  return data.message.content;
+async function queryLocal(query, signal) {
+  const data = await fetchWithTimeout(
+    LOCAL_OLLAMA.baseURL,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: LOCAL_OLLAMA.model,
+        messages: [{ role: 'user', content: query }],
+        stream: false
+      })
+    },
+    15000,
+    signal
+  );
+
+  return data.message?.content || 'No response';
 }
 
 /* ===================== SEARCH ===================== */
 
+let searchController = null;
+
+function renderResult(name, text) {
+  return `
+    <div class="response-card">
+      <div class="provider-badge">${name}</div>
+      <div class="response-content">${escapeHTML(text)}</div>
+    </div>`;
+}
+
 async function performSearch() {
   const query = DOM.searchInput.value.trim();
   if (!query) return alert('Enter search query');
+
+  if (searchController) searchController.abort();
+  searchController = new AbortController();
 
   DOM.loading.classList.add('active');
   DOM.resultsSection.classList.remove('active');
@@ -153,36 +187,32 @@ async function performSearch() {
     const provider = DOM.aiProvider.value;
 
     if (provider === 'llama-local') {
-      const text = await queryLocal(query);
-      DOM.resultsArea.innerHTML = `
-        <div class="response-card">
-          <div class="provider-badge">🦙 LLaMA Local</div>
-          <div class="response-content">${escapeHTML(text)}</div>
-        </div>`;
+      const text = await queryLocal(query, searchController.signal);
+      DOM.resultsArea.innerHTML = renderResult('🦙 LLaMA Local', text);
     } else {
       if (!hasInternet()) throw new Error('No internet connection');
 
       const providers = provider === 'compare' ? PROVIDERS : [provider];
 
       const tasks = providers.map(p => {
-        const key = document.getElementById(p + 'Key').value.trim();
-        if (!key) return Promise.reject(`${API_CONFIG[p].name} not configured`);
-        return queryCloud(p, query, key).then(text => ({ p, text }));
+        const key = DOM.keyInputs[p].value.trim();
+        if (!key) return Promise.reject(new Error(`${API_CONFIG[p].name} not configured`));
+        return queryCloud(p, query, key, searchController.signal)
+          .then(text => ({ p, text }));
       });
 
       const results = await Promise.allSettled(tasks);
 
       DOM.resultsArea.innerHTML = results.map(r =>
         r.status === 'fulfilled'
-          ? `<div class="response-card">
-               <div class="provider-badge">${API_CONFIG[r.value.p].name}</div>
-               <div class="response-content">${escapeHTML(r.value.text)}</div>
-             </div>`
-          : `<div class="error">${r.reason}</div>`
+          ? renderResult(API_CONFIG[r.value.p].name, r.value.text)
+          : `<div class="error">${escapeHTML(r.reason.message)}</div>`
       ).join('');
     }
   } catch (err) {
-    DOM.resultsArea.innerHTML = `<div class="error">${err.message}</div>`;
+    if (err.name !== 'AbortError') {
+      DOM.resultsArea.innerHTML = `<div class="error">${escapeHTML(err.message)}</div>`;
+    }
   }
 
   DOM.loading.classList.remove('active');
@@ -195,7 +225,7 @@ function loadApiKeys() {
   PROVIDERS.forEach(p => {
     const key = localStorage.getItem(p + '_api_key');
     if (key) {
-      document.getElementById(p + 'Key').value = key;
+      DOM.keyInputs[p].value = key;
       updateApiStatus(p, 'saved');
     }
   });
@@ -203,7 +233,7 @@ function loadApiKeys() {
 
 document.getElementById('saveConfigBtn').onclick = () => {
   PROVIDERS.forEach(p => {
-    const key = document.getElementById(p + 'Key').value.trim();
+    const key = DOM.keyInputs[p].value.trim();
     if (key) {
       localStorage.setItem(p + '_api_key', key);
       updateApiStatus(p, 'saved');
@@ -218,13 +248,11 @@ document.getElementById('testApisBtn').onclick = async () => {
   const results = await Promise.all(PROVIDERS.map(testApiConnection));
   const ok = results.filter(Boolean).length;
 
-  if (ok > 0) {
-    DOM.searchSection.classList.add('active');
-    DOM.globalStatus.classList.add('connected');
-    DOM.statusText.textContent = `APP: ${ok}/${PROVIDERS.length} APIs connected`;
-  } else {
-    DOM.statusText.textContent = 'APP: No APIs connected';
-  }
+  DOM.searchSection.classList.toggle('active', ok > 0);
+  DOM.globalStatus.classList.toggle('connected', ok > 0);
+  DOM.statusText.textContent = ok
+    ? `APP: ${ok}/${PROVIDERS.length} APIs connected`
+    : 'APP: No APIs connected';
 };
 
 document.getElementById('llamaLocalBtn').onclick = () => {

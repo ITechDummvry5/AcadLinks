@@ -102,3 +102,7 @@ This tool demonstrates how ACADLINK can be expanded to include AI-powered featur
 
 Note! 
 ( (The start.bat file serves as a launcher and instruction guide for using AI-related tools.) Step By Step View In VsCode)
+
+Configuration
+{$env:OLLAMA_ORIGINS="*" }
+{ollama serve }

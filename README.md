@@ -11,8 +11,11 @@ AcadLinks/
 ├── core/
 ├       └── start.bat   
 │       └── assets/
+│            ├── all.min.css
 │            ├── style.css
+│            ├── tools.css
 │            ├── script.js
+│            ├── tools.js
 │            ├── fonts /
 │            └── images/
 ├       └── Webfonts
@@ -93,9 +96,9 @@ When the Tools button is clicked, it launches an ACADLINKS Intelligence tool, wh
 - OpenAI
 - Ollama / xAI
 - Grok
+- Ollama / Local
 PURPOSE OF THE TOOL
 This tool demonstrates how ACADLINK can be expanded to include AI-powered features, such as intelligent search, recommendations, or future chatbot assistance. It serves as a foundation for integrating real AI APIs into the system.
 
 Note! 
 ( (The start.bat file serves as a launcher and instruction guide for using AI-related tools.) Step By Step View In VsCode)
-sk-ae9358a5c577429e981b7857ea8e8204

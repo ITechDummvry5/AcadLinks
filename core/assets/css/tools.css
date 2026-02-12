@@ -18,7 +18,7 @@ body {
   line-height: 1.6;
   color: #eee;
   background: linear-gradient(rgba(30, 30, 30, 0.959), rgba(30,30,30,0.85)),
-    url("images/favicon.ico") center / cover no-repeat fixed;
+    url("../images/favicon.ico") center / cover no-repeat fixed;
 }
 
 .container { max-width: 900px; margin:0 auto; }

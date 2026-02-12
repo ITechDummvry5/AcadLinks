@@ -6,20 +6,23 @@ PROJECT STRUCTURE
 
 AcadLinks/
 │
+├── about.html
+├── contact.html
 ├── index.html
 ├── tools.html
 ├── core/
-├       └── start.bat   
-│       └── assets/
-│            ├── all.min.css
-│            ├── style.css
-│            ├── tools.css
-│            ├── script.js
-│            ├── tools.js
-│            ├── fonts /
-│            └── images/
-├       └── Webfonts
-│              └── (icon Stored)
+│   ├── start.bat
+│   └── assets/
+│       ├── css/
+│       │   ├── all.min.css
+│       │   ├── style.css
+│       │   └── tools.css
+│       ├── js/
+│       │   ├── script.js
+│       │   └── tools.js
+│       ├── fonts/        → (fonts stored here)
+│       ├── images/       → (images & logos stored here)
+│       └── webfonts/     → (icon files stored here)
 └── README.md
 
 FEATURES (Bullets Word)

@@ -35,6 +35,7 @@ FEATURES (Bullets Word)
 - Responsive scholarship cards
 - Direct links to official scholarship websites
 - (Open And Closed) Status & Deadline
+- Tools Support Multi APIs AI And Local LLama AI
 
 UI ENHANCEMENTS
 - Font Awesome icons for better visuals
@@ -48,6 +49,7 @@ TECHNOLOGIES USED
 - JavaScript (Vanilla JS)
 - Font Awesome
 - Laptop / Computer
+- Start.bat
 DEPLOYMENT USED (Online)
 - Vercel 
 - GitHub
@@ -60,7 +62,7 @@ This project aims to:
 - Reduce the time and effort students spend searching for scholarship opportunities
 - Serve as a helpful guide for senior high school and college students
 
-🌱 FUTURE IMPROVEMENTS
+🌱 FUTURE IMPROVEMENTS (LIMITATION OF THE SYSTEM)
 - Connect to a real scholarship API (No official “scholarship API” in the Philippines exists)
 - Save favorite scholarships
 - User accounts and login system
@@ -79,8 +81,8 @@ All available scholarships are collected and displayed in one platform, instead 
 4. Scholarship Cards Display
 Each scholarship is shown in a card with: [TITLE, DESCRIPTION, LOCATION, APPLICABLE STRAND, OFFICIAL APPLICATION LINK]
 This makes the information easy to read and compare.
-5. Direct Application Links
-Students can click Apply to visit the official scholarship website for accurate and updated application details.
+    5. Direct Application Links
+    Students can click Apply to visit the official scholarship website for accurate and updated application details.
 6. Loading Animation
 A loader appears while search results are being processed, improving user experience and feedback.
 7. Clean and User-Friendly Interface
@@ -96,10 +98,12 @@ This helps students quickly identify which scholarships are still available and 
 About? TOOLS PAGE – ACADLINKS INTELLIGENCE
 The Tools section provides access to additional utilities that extend the system beyond scholarship searching.
 When the Tools button is clicked, it launches an ACADLINKS Intelligence tool, which is designed to prepare and connect the system to real AI services. 
+CLOUDS
 - DeepSeek
 - OpenAI
 - Ollama / xAI
 - Grok
+LOCAL 
 - Ollama / Local
 PURPOSE OF THE TOOL
 This tool demonstrates how ACADLINK can be expanded to include AI-powered features, such as intelligent search, recommendations, or future chatbot assistance. It serves as a foundation for integrating real AI APIs into the system.
@@ -107,8 +111,10 @@ This tool demonstrates how ACADLINK can be expanded to include AI-powered featur
 Note! 
 ( (The start.bat file serves as a launcher and instruction guide for using AI-related tools.) Step By Step View In VsCode)
 
-Start Server Local Llama
+
+- Start Server Local Llama
 ollama run llama3
-Configuration
+
+- Configuration
 {$env:OLLAMA_ORIGINS="*" }
 {ollama serve }

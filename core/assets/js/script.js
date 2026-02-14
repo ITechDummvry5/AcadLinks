@@ -209,16 +209,6 @@ const scholarships = [
     deadline: "August 2, 2026"
   },
   {
-    title: "Philippine Red Cross Scholarship",
-    description: "Support for students taking Health Science and related courses.",
-    location: "Manila",
-    course: "STEM",
-    link: "https://www.redcross.org.ph",
-    image: "core/assets/images/RED.png",
-    status: "CLOSED",
-    deadline: "October 28, 2025"
-  },
-  {
     title: "San Miguel Foundation Scholarship",
     description: "Scholarship for senior high and college students in Business and ABM strand.",
     location: "Cebu",
@@ -228,9 +218,9 @@ const scholarships = [
     status: "OPEN",
     deadline: "June 12, 2026"
   }
+
+
 ];
-
-
 // ====================== SEARCH FUNCTION ======================
 
 function searchScholarships() {

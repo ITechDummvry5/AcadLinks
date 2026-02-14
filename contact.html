@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href="core/assets/images/Logo/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="core/assets/css/all.min.css">
 <title>ACADLINK – Contact</title>
 
 <style>
-/* ===================== FONT ===================== */
 @font-face {
   font-family: "Cairo";
   src: url("core/assets/fonts/Cairo-Medium.ttf") format("truetype");
@@ -37,21 +37,117 @@ body { font-family:'Cairo',sans-serif; background:#f8f9fa; color:#494949; }
 
 /* ===================== HEADER ===================== */
 .sub-heading { font-size:.8rem; letter-spacing:2px; text-transform:uppercase; margin-bottom:10px; }
-.main-heading { font-size:2.5rem; font-weight:900; border-bottom:3px solid #ddd; display:inline-block; padding-bottom:10px; margin-bottom:40px; }
+.main-heading { font-size:2.5rem; font-weight:900; border-bottom:3px solid #ddd; display:inline-block; padding-bottom:10px; margin-bottom:30px; }
 .angle { color:#ee6414; }
 
-/* ===================== FORM ===================== */
-.contact-form { background:#fff; padding:30px; border-radius:8px; border:1px solid #eee; max-width:750px; }
-.contact-form label { display:block; margin-bottom:5px; font-weight:600; }
-.contact-form input, .contact-form textarea {
-  width:100%; padding:10px; border:1px solid #ddd; border-radius:4px; margin-bottom:15px;
+/* ===================== CARD ===================== */
+.contact-card{
+  background:#fff;
+  border-radius:14px;
+  padding:35px;
+  max-width:900px;
+  box-shadow:0 10px 30px rgba(0,0,0,.05);
 }
-.contact-form input:focus, .contact-form textarea:focus { outline:none; border-color:#ee6414; }
-.contact-form button { padding:10px 20px; background:#ee6414; border:none; color:#fff; cursor:pointer; font-weight:600; border-radius:4px; transition:.3s; }
-.contact-form button:hover { opacity:.85; }
+
+/* ===================== SPLIT ===================== */
+.contact-split{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:30px;
+}
+
+/* ===================== FORM ===================== */
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.form-grid .full{
+  grid-column:1 / 3;
+}
+
+.form-grid label{
+  display:block;
+  font-weight:600;
+  margin-bottom:5px;
+}
+
+.form-grid input,
+.form-grid textarea{
+  width:100%;
+  padding:12px;
+  border:1px solid #ddd;
+  border-radius:8px;
+}
+
+.form-grid input:focus,
+.form-grid textarea:focus{
+  outline:none;
+  border-color:#ee6414;
+  box-shadow:0 0 0 2px rgba(238,100,20,.2);
+}
+
+.form-grid button{
+  background:#ee6414;
+  color:#fff;
+  border:none;
+  padding:12px;
+  border-radius:8px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.form-grid button:hover{ opacity:.85; }
+
+/* ===================== SOCIAL ===================== */
+.social-side{
+  background:linear-gradient(135deg,#ee6414,#ff8a3d);
+  color:#fff;
+  border-radius:12px;
+  padding:30px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.social-side h3{
+  font-size:1.4rem;
+  margin-bottom:10px;
+}
+
+.social-side p{
+  font-size:.9rem;
+  opacity:.9;
+  margin-bottom:20px;
+}
+
+.social-links{
+  display:flex;
+  gap:15px;
+}
+
+.social-links a{
+  width:40px;
+  height:40px;
+  background:rgba(255,255,255,.2);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  color:#fff;
+  font-size:1.1rem;
+  transition:.3s;
+}
+
+.social-links a:hover{
+  background:#fff;
+  color:#ee6414;
+  transform:translateY(-3px);
+}
 
 /* ===================== STATUS ===================== */
-.status-message { margin-top:20px; font-size:.9rem; }
+.status-message { margin-top:10px; font-size:.9rem; }
 .status-message.success { color:#28a745; }
 .status-message.error { color:#cc0000; }
 
@@ -60,9 +156,15 @@ body { font-family:'Cairo',sans-serif; background:#f8f9fa; color:#494949; }
   .about-section{flex-direction:column;}
   .left-header{height:250px;position:relative;}
 }
-</style>
 
+@media(max-width:768px){
+  .contact-split{ grid-template-columns:1fr; }
+  .form-grid{ grid-template-columns:1fr; }
+  .form-grid .full{ grid-column:1; }
+}
+</style>
 </head>
+
 <body>
 <section class="about-section">
 
@@ -77,18 +179,59 @@ body { font-family:'Cairo',sans-serif; background:#f8f9fa; color:#494949; }
 <h6 class="sub-heading">GET IN TOUCH</h6>
 <h1 class="main-heading"><span class="angle">&lt;</span> CONTACT <span class="angle">&gt;</span></h1>
 
-<div class="contact-form">
-  <label for="nameInput">Name</label>
-  <input type="text" id="nameInput" placeholder="Your name">
+<div class="contact-card">
+  <div class="contact-split">
 
-  <label for="emailInput">Email</label>
-  <input type="email" id="emailInput" placeholder="you@example.com">
+    <!-- LEFT -->
+    <div class="form-side">
+      <div class="form-grid">
 
-  <label for="messageInput">Message</label>
-  <textarea id="messageInput" rows="6" placeholder="Write your message..."></textarea>
+        <div>
+          <label>Name</label>
+          <input type="text" id="nameInput" placeholder="Your name">
+        </div>
 
-  <button id="sendBtn">Send Message</button>
-  <div id="formStatus" class="status-message"></div>
+                <div>
+          <label>Email</label>
+          <input type="email" id="emailInput" placeholder="you@example.com">
+        </div>
+
+        <div>
+  <label>Phone</label>
+  <input type="text" id="phoneInput" placeholder="e.g. +63-912-345-6789">
+</div>
+
+      <div>
+  <label>School</label>
+  <input type="text" id="schoolInput" placeholder="Your Current School">
+</div>
+
+
+        <div class="full">
+          <label>Message</label>
+          <textarea id="messageInput" rows="6" placeholder="Write your message..."></textarea>
+        </div>
+
+        <div class="full">
+          <button id="sendBtn">Send Message</button>
+          <div id="formStatus" class="status-message"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="social-side">
+      <h3>Connect with us</h3>
+      <p>Follow us on social media for updates and announcements.</p>
+      <div class="social-links">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+
+  </div>
 </div>
 </div>
 </section>
@@ -96,6 +239,8 @@ body { font-family:'Cairo',sans-serif; background:#f8f9fa; color:#494949; }
 <script>
 const nameInput = document.getElementById('nameInput');
 const emailInput = document.getElementById('emailInput');
+const phoneInput = document.getElementById('phoneInput');
+const schoolInput = document.getElementById('schoolInput');
 const messageInput = document.getElementById('messageInput');
 const sendBtn = document.getElementById('sendBtn');
 const formStatus = document.getElementById('formStatus');
@@ -105,36 +250,27 @@ function setStatus(msg,type){
   formStatus.className = 'status-message '+type;
 }
 
-// ===================== DUMMY SEND =====================
-function fakeSend(name,email,message){
-  return new Promise((resolve)=>{
-    // Simulate network delay
+function fakeSend(){
+  return new Promise(resolve=>{
     setStatus('Sending message...','success');
-    setTimeout(()=>resolve('Message sent successfully!'), 1500);
+    setTimeout(()=>resolve(),1500);
   });
 }
 
 sendBtn.onclick = async ()=>{
-  const name = nameInput.value.trim();
-  const email = emailInput.value.trim();
-  const message = messageInput.value.trim();
-
-  if(!name || !email || !message){
+  if(!nameInput.value || !emailInput.value || !phoneInput.value || !schoolInput.value || !messageInput.value){
     setStatus('All fields are required','error');
     return;
   }
-
   sendBtn.disabled = true;
-
-  try{
-    await fakeSend(name,email,message); // fake send
-    setStatus('Message sent successfully!','success');
-    nameInput.value = emailInput.value = messageInput.value = '';
-  }catch(e){
-    setStatus('Something went wrong. Try again.','error');
-  }finally{
-    sendBtn.disabled = false;
-  }
+  await fakeSend();
+  setStatus('Message sent successfully!','success');
+  nameInput.value = '';
+  emailInput.value = '';
+  phoneInput.value = '';
+  schoolInput.value = '';
+  messageInput.value = '';
+  sendBtn.disabled=false;
 };
 </script>
 

@@ -1,113 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contact Form</title>
-    <link rel="stylesheet" href="core/assets/css/contact.css" />
-      <link rel="stylesheet" href="core/assets/css/all.min.css">
-<link rel="shortcut icon" href="core/assets/images/favicon.ico" type="image/x-icon">
-  </head>
-  <body>
-    <div class="container">
-      <span class="big-circle"></span>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ACADLINK – Contact</title>
 
-      <div class="form">
-        <div class="contact-info">
-          <h3 class="title">Let's get in touch</h3>
-          <p class="text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe
-            dolorum adipisci recusandae praesentium dicta!
-          </p>
+<style>
+/* ===================== FONT ===================== */
+@font-face {
+  font-family: "Cairo";
+  src: url("core/assets/fonts/Cairo-Medium.ttf") format("truetype");
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Cairo',sans-serif; background:#f8f9fa; color:#494949; }
 
-          <div class="info">
-            <div class="information">
-              <i class="fas fa-map-marker-alt"></i> &nbsp &nbsp
+/* ===================== LAYOUT ===================== */
+.about-section { display:flex; min-height:100vh; }
+.left-header {
+  flex:0 0 30%;
+  background:linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)),
+  url('core/assets/images/contactbg.jpg') center/cover;
+  color:#fff;
+  position:sticky;
+  top:0;
+  height:100vh;
+  display:flex;
+  align-items:flex-end;
+  padding:60px;
+}
+.left-content h2 { font-size:2rem; text-transform:uppercase; border-bottom:2px solid #fff; padding-bottom:10px; }
+.left-content h3 { margin-top:15px; font-size:.9rem; }
+.left-content a { color:#ddd; text-decoration:none; }
+.left-content a:hover { color:#fff; }
+.main-content { flex:1; padding:60px; }
 
-              <p>92 Cherry Drive Uniondale, NY 11553</p>
-            </div>
-            <div class="information">
-              <i class="fas fa-envelope"></i> &nbsp &nbsp
-              <p>lorem@ipsum.com</p>
-            </div>
-            <div class="information">
-              <i class="fas fa-phone"></i>&nbsp&nbsp
-              <p>123-456-789</p>
-            </div>
-          </div>
+/* ===================== HEADER ===================== */
+.sub-heading { font-size:.8rem; letter-spacing:2px; text-transform:uppercase; margin-bottom:10px; }
+.main-heading { font-size:2.5rem; font-weight:900; border-bottom:3px solid #ddd; display:inline-block; padding-bottom:10px; margin-bottom:40px; }
+.angle { color:#ee6414; }
 
-          <div class="social-media">
-            <p>Connect with us :</p>
-            <div class="social-icons">
-              <a href="#">
-                <i class="fab fa-facebook-f"></i>
-              </a>
-              <a href="#">
-                <i class="fab fa-github"></i>
-              </a>
-              <a href="#">
-                <i class="fab fa-instagram"></i>
-              </a>
-              <a href="#">
-                <i class="fab fa-linkedin-in"></i>
-              </a>
-            </div>
-          </div>
-    <a href="index.html" class="go-back">Go Back</a>
-        </div>
-   <span class="big-circle1"></span>
-        <div class="contact-form">
-          <span class="circle one"></span>
-          <span class="circle two"></span>
+/* ===================== FORM ===================== */
+.contact-form { background:#fff; padding:30px; border-radius:8px; border:1px solid #eee; max-width:750px; }
+.contact-form label { display:block; margin-bottom:5px; font-weight:600; }
+.contact-form input, .contact-form textarea {
+  width:100%; padding:10px; border:1px solid #ddd; border-radius:4px; margin-bottom:15px;
+}
+.contact-form input:focus, .contact-form textarea:focus { outline:none; border-color:#ee6414; }
+.contact-form button { padding:10px 20px; background:#ee6414; border:none; color:#fff; cursor:pointer; font-weight:600; border-radius:4px; transition:.3s; }
+.contact-form button:hover { opacity:.85; }
 
-          <form action="index.html" autocomplete="off">
-            <h3 class="title">Contact us</h3>
-            <div class="input-container">
-              <input type="text" name="name" class="input" />
-              <label for="">Username</label>
-              <span>Username</span>
-            </div>
-            <div class="input-container">
-              <input type="email" name="email" class="input" />
-              <label for="">Email</label>
-              <span>Email</span>
-            </div>
-            <div class="input-container">
-              <input type="tel" name="phone" class="input" />
-              <label for="">Phone</label>
-              <span>Phone</span>
-            </div>
-            <div class="input-container textarea">
-              <textarea name="message" class="input"></textarea>
-              <label for="">Message</label>
-              <span>Message</span>
-            </div>
-            <input type="submit" value="Send" class="btn" />
-          </form>
-        </div>
-      </div>
-    </div>
+/* ===================== STATUS ===================== */
+.status-message { margin-top:20px; font-size:.9rem; }
+.status-message.success { color:#28a745; }
+.status-message.error { color:#cc0000; }
 
-    <script>
-const inputs = document.querySelectorAll(".input");
+/* ===================== RESPONSIVE ===================== */
+@media(max-width:992px){
+  .about-section{flex-direction:column;}
+  .left-header{height:250px;position:relative;}
+}
+</style>
 
-function focusFunc() {
-  let parent = this.parentNode;
-  parent.classList.add("focus");
+</head>
+<body>
+<section class="about-section">
+
+<div class="left-header">
+  <div class="left-content">
+    <h2>Contact Us</h2>
+    <h3><a href="index.html">Go Back</a></h3>
+  </div>
+</div>
+
+<div class="main-content">
+<h6 class="sub-heading">GET IN TOUCH</h6>
+<h1 class="main-heading"><span class="angle">&lt;</span> CONTACT <span class="angle">&gt;</span></h1>
+
+<div class="contact-form">
+  <label for="nameInput">Name</label>
+  <input type="text" id="nameInput" placeholder="Your name">
+
+  <label for="emailInput">Email</label>
+  <input type="email" id="emailInput" placeholder="you@example.com">
+
+  <label for="messageInput">Message</label>
+  <textarea id="messageInput" rows="6" placeholder="Write your message..."></textarea>
+
+  <button id="sendBtn">Send Message</button>
+  <div id="formStatus" class="status-message"></div>
+</div>
+</div>
+</section>
+
+<script>
+const nameInput = document.getElementById('nameInput');
+const emailInput = document.getElementById('emailInput');
+const messageInput = document.getElementById('messageInput');
+const sendBtn = document.getElementById('sendBtn');
+const formStatus = document.getElementById('formStatus');
+
+function setStatus(msg,type){
+  formStatus.textContent = msg;
+  formStatus.className = 'status-message '+type;
 }
 
-function blurFunc() {
-  let parent = this.parentNode;
-  if (this.value == "") {
-    parent.classList.remove("focus");
+// ===================== DUMMY SEND =====================
+function fakeSend(name,email,message){
+  return new Promise((resolve)=>{
+    // Simulate network delay
+    setStatus('Sending message...','success');
+    setTimeout(()=>resolve('Message sent successfully!'), 1500);
+  });
+}
+
+sendBtn.onclick = async ()=>{
+  const name = nameInput.value.trim();
+  const email = emailInput.value.trim();
+  const message = messageInput.value.trim();
+
+  if(!name || !email || !message){
+    setStatus('All fields are required','error');
+    return;
   }
-}
 
-inputs.forEach((input) => {
-  input.addEventListener("focus", focusFunc);
-  input.addEventListener("blur", blurFunc);
-});
+  sendBtn.disabled = true;
 
-    </script>
-  </body>
+  try{
+    await fakeSend(name,email,message); // fake send
+    setStatus('Message sent successfully!','success');
+    nameInput.value = emailInput.value = messageInput.value = '';
+  }catch(e){
+    setStatus('Something went wrong. Try again.','error');
+  }finally{
+    sendBtn.disabled = false;
+  }
+};
+</script>
+
+</body>
 </html>

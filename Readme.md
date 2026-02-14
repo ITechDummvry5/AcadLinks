@@ -17,8 +17,6 @@ AcadLinks/
 │       │   ├── all.min.css
 │       │   ├── style.css
 │       │   └── tools.css
-│       │   └── contact.css
-│       │   └── about.css
 │       ├── js/
 │       │   ├── script.js
 │       │   └── tools.js
@@ -108,6 +106,8 @@ This tool demonstrates how ACADLINK can be expanded to include AI-powered featur
 Note! 
 ( (The start.bat file serves as a launcher and instruction guide for using AI-related tools.) Step By Step View In VsCode)
 
+Start Server Local Llama
+ollama run llama3
 Configuration
 {$env:OLLAMA_ORIGINS="*" }
 {ollama serve }

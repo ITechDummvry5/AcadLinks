@@ -34,9 +34,7 @@ input,
 select {
     font-family: "DESC", sans-serif;
 }
- select{
-  color: #e68900;
-}
+
 
 html, body {
   height: 100%;

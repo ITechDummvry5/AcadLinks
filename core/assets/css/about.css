@@ -25,7 +25,7 @@ body {
 .left-header {
   flex: 0 0 30%;
   background: linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)),
-              url('../images/contactbg.jpg') center/cover;
+              url('../images/Logo/contactbg.jpg') center/cover;
   color: #fff;
   position: sticky;
   top: 0;

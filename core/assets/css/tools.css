@@ -11,7 +11,7 @@ body { font-family:'Cairo', sans-serif; background:#1e1e1e; color:#eee; line-hei
 .main-section { display:flex; min-height:100vh; }
 .left-panel {
   flex:0 0 30%;
-  background:linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)), url('../images/contact.jpg') center/cover no-repeat;
+  background:linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)), url('../images/Logo/contact.jpg') center/cover no-repeat;
   color:#fff;
   position:sticky;
   top:0;
